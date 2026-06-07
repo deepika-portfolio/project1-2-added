@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Character Counter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-blue-200">
+
+  <div class="bg-white w-96 rounded-xl shadow-lg p-8">
+
+    <h1 class="text-2xl font-bold text-center mb-2">Message Box</h1>
+    <p class="text-gray-400 text-sm text-center mb-6">200 characters max</p>
+
+    <!-- Text Area -->
+    <textarea id="message" maxlength="200" rows="5" placeholder="Type your message here..."
+      class="w-full border-2 rounded-lg px-3 py-2 resize-none focus:outline-none focus:border-pink-100">
+    </textarea>
+
+    <!-- Character Counter -->
+    <p id="counter" class="text-sm text-gray-500 mt-2 text-right">0 / 200 characters</p>
+
+    <!-- Warning Message -->
+    <p id="warning" class="text-red-500 text-sm font-semibold mt-2 text-center hidden">
+      Character limit reached!
+    </p>
+
+  </div>
+
+<script>
+  const textarea = document.getElementById("message");
+  const counter  = document.getElementById("counter");
+  const warning  = document.getElementById("warning");
+  const maxChars = 200;
+
+  textarea.addEventListener("input", function () {
+
+    // Get how many characters typed
+    let typed = textarea.value.length;
+
+    // If exceeds limit, cut the extra characters
+    if (typed > maxChars) {
+      textarea.value = textarea.value.substring(0, maxChars);
+      typed = maxChars;
+    }
+
+    // Update counter text
+    counter.textContent = typed + " / " + maxChars + " characters";
+
+    // Change color based on usage
+    if (typed === maxChars) {
+      counter.classList.remove("text-gray-500", "text-yellow-500");
+      counter.classList.add("text-red-500");
+      warning.classList.remove("hidden");
+    } else if (typed >= 150) {
+      counter.classList.remove("text-gray-500", "text-red-500");
+      counter.classList.add("text-yellow-500");
+      warning.classList.add("hidden");
+    } else {
+      counter.classList.remove("text-yellow-500", "text-red-500");
+      counter.classList.add("text-gray-500");
+      warning.classList.add("hidden");
+    }
+  });
+</script>
+
+</body>
+</html>
